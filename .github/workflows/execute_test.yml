@@ -1,0 +1,26 @@
+name: Execute Test
+on:
+  workflow_dispatch:
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: test workflow execution
+    steps:
+      - name: execute
+        id: execute
+        with:
+          wait: false
+          server: playground.direktiv.io
+          workflow: jens/action
+          token: ${{ secrets.DIREKTIV_TOKEN }}
+          data: |
+            {
+              "data": "one"
+            }
+        uses: jensg-st/direktiv-actions@test
+      - name: get the output
+        run: |
+          echo "show me the vars"
+        env:
+          WF_BODY: ${{ steps.execute.outputs.instance-body }}
+          WF_ID: ${{ steps.execute.outputs.instance-id }}
