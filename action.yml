@@ -1,0 +1,42 @@
+name: 'Execute Direktiv Workflow'
+description: 'Executes a workflow in direktiv'
+branding:
+  icon: 'play-circle'
+  color: 'blue'
+inputs:
+  server:
+    description: 'direktiv server ip or name'
+    required: true
+  protocol:
+    description: 'http or https'
+    required: false
+    default: 'https'
+  workflow:
+    description: 'namespace/workflow to execute'
+    required: true
+  token:
+    description: 'access token for the direktiv server'
+    required: false
+    default: ''
+  data:
+    description: 'workflow data'
+    required: false
+    default: '{}'
+  wait:
+    description: 'wait'
+    required: false
+    default: 'false'
+outputs:
+  instance-id:
+    description: 'instance-id of the workflow'
+  instance-body:
+    description: 'body of the response if wait it set'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.server }}
+    - ${{ inputs.workflow }}
+    - ${{ inputs.token }}
+    - ${{ inputs.data }}
+    - ${{ inputs.wait }}
