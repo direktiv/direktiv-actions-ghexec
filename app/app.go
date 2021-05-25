@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/sethvargo/go-githubactions"
+	githubactions "github.com/sethvargo/go-githubactions"
 )
 
 type args struct {
@@ -52,7 +52,7 @@ func main() {
 		getValue(&in[i].value, in[i].name)
 	}
 
-	fmt.Printf("using server: %v\n", in[serverIdx].value)
+	githubactions.Infof("using server: %v\n", in[serverIdx].value)
 
 	if in[serverIdx].value == "" || in[workflowIdx].value == "" {
 		githubactions.Fatalf("server and workflow values are required\n")
@@ -117,8 +117,6 @@ func doRequest(in []args) {
 		githubactions.Infof("instance id: %v\n", id)
 
 		githubactions.SetOutput("instance-id", id)
-
-		fmt.Printf(">>> %v %v\n", len(b), string(b))
 		githubactions.SetOutput("instance-body", string(b))
 
 	} else {
